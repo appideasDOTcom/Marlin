@@ -662,6 +662,12 @@
 // if unwanted behavior is observed on a user's machine when running at very slow speeds.
 #define MINIMUM_PLANNER_SPEED 0.05 // (mm/s)
 
+#define JUNCTION_DEVIATION
+
+#if ENABLED(JUNCTION_DEVIATION)
+  #define JUNCTION_DEVIATION_MM 0.02
+#endif
+
 //
 // Backlash Compensation
 // Adds extra movement to axes on direction-changes to account for backlash.
@@ -1823,7 +1829,7 @@
   #endif
 
   #if AXIS_IS_TMC(Z)
-    #define Z_CURRENT     950
+    #define Z_CURRENT     1100
     #define Z_MICROSTEPS   16
     #define Z_RSENSE     0.11
     #define Z_CHAIN_POS    -1
@@ -1953,7 +1959,7 @@
    * When disabled, Marlin will use spreadCycle stepping mode.
    */
   #define STEALTHCHOP_XY
-  #define STEALTHCHOP_Z
+  // #define STEALTHCHOP_Z
   //#define STEALTHCHOP_E
 
   /**

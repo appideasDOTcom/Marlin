@@ -346,7 +346,7 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define E0_AUTO_FAN_PIN -1
+#define E0_AUTO_FAN_PIN P2_04
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
@@ -355,7 +355,7 @@
 #define CHAMBER_AUTO_FAN_PIN -1
 
 #define EXTRUDER_AUTO_FAN_TEMPERATURE 50
-#define EXTRUDER_AUTO_FAN_SPEED 255   // 255 == full speed
+#define EXTRUDER_AUTO_FAN_SPEED 128   // 255 == full speed
 #define CHAMBER_AUTO_FAN_TEMPERATURE 30
 #define CHAMBER_AUTO_FAN_SPEED 255
 
@@ -662,11 +662,11 @@
 // if unwanted behavior is observed on a user's machine when running at very slow speeds.
 #define MINIMUM_PLANNER_SPEED 0.05 // (mm/s)
 
-#define JUNCTION_DEVIATION
+// #define JUNCTION_DEVIATION
 
-#if ENABLED(JUNCTION_DEVIATION)
-  #define JUNCTION_DEVIATION_MM 0.02
-#endif
+// #if ENABLED(JUNCTION_DEVIATION)
+//   #define JUNCTION_DEVIATION_MM 0.02
+// #endif
 
 //
 // Backlash Compensation
@@ -1829,14 +1829,14 @@
   #endif
 
   #if AXIS_IS_TMC(Z)
-    #define Z_CURRENT     1100
+    #define Z_CURRENT     950
     #define Z_MICROSTEPS   16
     #define Z_RSENSE     0.11
     #define Z_CHAIN_POS    -1
   #endif
 
   #if AXIS_IS_TMC(Z2)
-    #define Z2_CURRENT    900
+    #define Z2_CURRENT    800
     #define Z2_MICROSTEPS  16
     #define Z2_RSENSE    0.11
     #define Z2_CHAIN_POS   -1
@@ -1850,7 +1850,7 @@
   #endif
 
   #if AXIS_IS_TMC(E0)
-    #define E0_CURRENT    900
+    #define E0_CURRENT    950
     #define E0_MICROSTEPS  16
     #define E0_RSENSE    0.11
     #define E0_CHAIN_POS   -1
@@ -1959,7 +1959,7 @@
    * When disabled, Marlin will use spreadCycle stepping mode.
    */
   #define STEALTHCHOP_XY
-  // #define STEALTHCHOP_Z
+  #define STEALTHCHOP_Z
   //#define STEALTHCHOP_E
 
   /**
@@ -2006,9 +2006,9 @@
    */
 #define HYBRID_THRESHOLD
 
-  #define X_HYBRID_THRESHOLD     100  // [mm/s]
+  #define X_HYBRID_THRESHOLD     150  // [mm/s]
   #define X2_HYBRID_THRESHOLD    100
-  #define Y_HYBRID_THRESHOLD     100
+  #define Y_HYBRID_THRESHOLD     150
   #define Y2_HYBRID_THRESHOLD    100
   #define Z_HYBRID_THRESHOLD       3
   #define Z2_HYBRID_THRESHOLD      3

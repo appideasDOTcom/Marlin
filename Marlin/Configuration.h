@@ -716,7 +716,7 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 160, 160, 400, 97 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 320, 320, 400, 220 }
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -784,10 +784,9 @@
  *   https://reprap.org/forum/read.php?1,739819
  *   http://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
-#if DISABLED(CLASSIC_JERK)
+// #if DISABLED(CLASSIC_JERK)
   #define JUNCTION_DEVIATION_MM 0.02  // (mm) Distance from real junction edge
-#endif
-#define JUNCTION_DEVIATION_MM 0.02
+// #endif
 
 /**
  * S-Curve Acceleration
@@ -1026,7 +1025,7 @@
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
-#define INVERT_E0_DIR false
+#define INVERT_E0_DIR true
 #define INVERT_E1_DIR false
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false

@@ -103,7 +103,15 @@ void plan_arc(
               mm_of_travel = linear_travel ? HYPOT(flat_mm, linear_travel) : ABS(flat_mm);
   if (mm_of_travel < 0.001f) return;
 
-  uint16_t segments = FLOOR(mm_of_travel / (MM_PER_ARC_SEGMENT));
+  const feedRate_t scaled_fr_mm_s = MMS_SCALED(feedrate_mm_s);
+
+  #ifdef ARC_SEGMENTS_PER_SEC
+    float seg_length = scaled_fr_mm_s * RECIPROCAL(ARC_SEGMENTS_PER_SEC);
+    NOLESS(seg_length, MM_PER_ARC_SEGMENT);
+  #else
+    constexpr float seg_length = MM_PER_ARC_SEGMENT;
+  #endif
+  uint16_t segments = FLOOR(mm_of_travel / seg_length);
   NOLESS(segments, min_segments);
 
   /**
@@ -146,10 +154,9 @@ void plan_arc(
   // Initialize the extruder axis
   raw.e = current_position.e;
 
-  const feedRate_t scaled_fr_mm_s = MMS_SCALED(feedrate_mm_s);
 
   #if ENABLED(SCARA_FEEDRATE_SCALING)
-    const float inv_duration = scaled_fr_mm_s / MM_PER_ARC_SEGMENT;
+    const float inv_duration = scaled_fr_mm_s / seg_length;
   #endif
 
   millis_t next_idle_ms = millis() + 200UL;
@@ -206,7 +213,7 @@ void plan_arc(
       planner.apply_leveling(raw);
     #endif
 
-    if (!planner.buffer_line(raw, scaled_fr_mm_s, active_extruder, MM_PER_ARC_SEGMENT
+    if (!planner.buffer_line(raw, scaled_fr_mm_s, active_extruder, seg_length
       #if ENABLED(SCARA_FEEDRATE_SCALING)
         , inv_duration
       #endif
@@ -226,7 +233,7 @@ void plan_arc(
     planner.apply_leveling(raw);
   #endif
 
-  planner.buffer_line(raw, scaled_fr_mm_s, active_extruder, MM_PER_ARC_SEGMENT
+  planner.buffer_line(raw, scaled_fr_mm_s, active_extruder, seg_length
     #if ENABLED(SCARA_FEEDRATE_SCALING)
       , inv_duration
     #endif
@@ -285,12 +292,13 @@ void GcodeSuite::G2_G3(const bool clockwise) {
       if (r) {
         const xy_pos_t p1 = current_position, p2 = destination;
         if (p1 != p2) {
-          const xy_pos_t d = p2 - p1, m = (p1 + p2) * 0.5f;   // XY distance and midpoint
-          const float e = clockwise ^ (r < 0) ? -1 : 1,       // clockwise -1/1, counterclockwise 1/-1
-                      len = d.magnitude(),                    // Total move length
-                      h = SQRT((r - d * 0.5f) * (r + d * 0.5f)); // Distance to the arc pivot-point
-          const xy_pos_t s = { d.x, -d.y };                   // Inverse Slope of the perpendicular bisector
-          arc_offset = m + s * RECIPROCAL(len) * e * h - p1;  // The calculated offset
+          const xy_pos_t d2 = (p2 - p1) * 0.5f;          // XY vector to midpoint of move from current
+          const float e = clockwise ^ (r < 0) ? -1 : 1,  // clockwise -1/1, counterclockwise 1/-1
+                      len = d2.magnitude(),              // Distance to mid-point of move from current
+                      h2 = (r - len) * (r + len),        // factored to reduce rounding error
+                      h = (h2 >= 0) ? SQRT(h2) : 0.0f;   // Distance to the arc pivot-point from midpoint
+          const xy_pos_t s = { -d2.y, d2.x };            // Perpendicular bisector. (Divide by len for unit vector.)
+          arc_offset = d2 + s / len * e * h;             // The calculated offset (mid-point if |r| <= len)
         }
       }
     }

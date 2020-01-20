@@ -475,10 +475,10 @@
 
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
-  // ostmoxy printerx - values from M303 C8 E0 S 240
-  #define DEFAULT_Kp 31.24  // 26.02, 31.24, 25.28, 32.26 // values produced from tests
-  #define DEFAULT_Ki 3.10  //   2.42,  3.10,  2.32,  3.18
-  #define DEFAULT_Kd 78.79 //  69.81, 78.79, 68.83, 81.91
+  // ostmoxy printerx - values from M303 C8 E0 S240 U
+  #define DEFAULT_Kp 26.19  // 26.02, 31.24, 25.28, 32.26 // values produced from tests
+  #define DEFAULT_Ki 2.28  //   2.42,  3.10,  2.32,  3.18
+  #define DEFAULT_Kd 75.35 //  69.81, 78.79, 68.83, 81.91
 
   // Ultimaker
   // #define DEFAULT_Kp 22.2
@@ -544,10 +544,10 @@
 
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 
-  // ostmoxy printerx
-  #define DEFAULT_bedKp 215.36  // 164.83,  215.36,  241.21,  146.99,  297.74 // values produced from tests
-  #define DEFAULT_bedKi 30.56   //  20.79,   30.56,   35.41,   20.39,   43.74
-  #define DEFAULT_bedKd 1011.78 // 871.16, 1011.78, 1095.33,  706.27, 1351.15
+  // ostmoxy printerx - values from M303 C8 E-1 S90 U
+  #define DEFAULT_bedKp 74.77
+  #define DEFAULT_bedKi 8.07
+  #define DEFAULT_bedKd 462.15
 
 #endif // PIDTEMPBED
 
@@ -764,7 +764,7 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_ACCELERATION          2000    // X, Y, Z and E acceleration for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  1000    // E acceleration for retracts
 #define DEFAULT_TRAVEL_ACCELERATION   2000    // X, Y, Z acceleration for travel (non printing) moves
 
@@ -798,7 +798,7 @@
  *   http://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-  #define JUNCTION_DEVIATION_MM 0.013 // (mm) Distance from real junction edge
+  #define JUNCTION_DEVIATION_MM 0.012 // (mm) Distance from real junction edge
 #endif
 
 /**
@@ -1333,15 +1333,15 @@
 // - Move the Z probe (or nozzle) to a defined XY point before Z Homing when homing all axes (G28).
 // - Prevent Z homing when the Z probe is outside bed area.
 //
-//#define Z_SAFE_HOMING
+#define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
-  #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2)    // X point for Z homing when homing all axes (G28).
-  #define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axes (G28).
+  #define Z_SAFE_HOMING_X_POINT 20    // X point for Z homing when homing all axes (G28).
+  #define Z_SAFE_HOMING_Y_POINT 20    // Y point for Z homing when homing all axes (G28).
 #endif
 
 // Homing speeds (mm/m)
-#define HOMING_FEEDRATE_XY (50*60)
+#define HOMING_FEEDRATE_XY (40*60)
 #define HOMING_FEEDRATE_Z  (5*60)
 
 // Validate that endstops are triggered on homing moves
@@ -1419,7 +1419,7 @@
  *   M501 - Read settings from EEPROM. (i.e., Throw away unsaved changes)
  *   M502 - Revert settings to "factory" defaults. (Follow with M500 to init the EEPROM.)
  */
-// #define EEPROM_SETTINGS     // Persistent storage with M500 and M501
+#define EEPROM_SETTINGS     // Persistent storage with M500 and M501
 #define DISABLE_M503        // Saves ~2700 bytes of PROGMEM. Disable for release!
 #define EEPROM_CHITCHAT       // Give feedback on EEPROM commands. Disable to save PROGMEM.
 #if ENABLED(EEPROM_SETTINGS)
@@ -1578,7 +1578,7 @@
  *
  * View the current statistics with M78.
  */
-//#define PRINTCOUNTER
+#define PRINTCOUNTER
 
 //=============================================================================
 //============================= LCD and SD support ============================

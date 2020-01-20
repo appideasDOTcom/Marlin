@@ -307,9 +307,9 @@ namespace Language_en {
   PROGMEM Language_Str MSG_ADVANCE_K                       = _UxGT("Advance K");
   PROGMEM Language_Str MSG_ADVANCE_K_E                     = _UxGT("Advance K *");
   PROGMEM Language_Str MSG_CONTRAST                        = _UxGT("LCD Contrast");
-  PROGMEM Language_Str MSG_STORE_EEPROM                    = _UxGT("Store Settings");
-  PROGMEM Language_Str MSG_LOAD_EEPROM                     = _UxGT("Load Settings");
-  PROGMEM Language_Str MSG_RESTORE_FAILSAFE                = _UxGT("Restore failsafe");
+  PROGMEM Language_Str MSG_STORE_EEPROM                    = _UxGT("Save Settings");
+  PROGMEM Language_Str MSG_LOAD_EEPROM                     = _UxGT("Reload Defaults");
+  PROGMEM Language_Str MSG_RESTORE_FAILSAFE                = _UxGT("Restore Failsafe");
   PROGMEM Language_Str MSG_INIT_EEPROM                     = _UxGT("Initialize EEPROM");
   PROGMEM Language_Str MSG_MEDIA_UPDATE                    = _UxGT("Media Update");
   PROGMEM Language_Str MSG_RESET_PRINTER                   = _UxGT("Reset Printer");

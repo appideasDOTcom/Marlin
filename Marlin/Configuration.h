@@ -514,17 +514,17 @@
   #define DEFAULT_Ki 2.28  //   2.42,  3.10,  2.32,  3.18
   #define DEFAULT_Kd 75.35 //  69.81, 78.79, 68.83, 81.91
 
-  #if ENABLED(PID_PARAMS_PER_HOTEND)
-    // Specify between 1 and HOTENDS values per array.
-    // If fewer than EXTRUDER values are provided, the last element will be repeated.
-    #define DEFAULT_Kp_LIST {  22.20,  22.20 }
-    #define DEFAULT_Ki_LIST {   1.08,   1.08 }
-    #define DEFAULT_Kd_LIST { 114.00, 114.00 }
-  #else
-    #define DEFAULT_Kp  22.20
-    #define DEFAULT_Ki   1.08
-    #define DEFAULT_Kd 114.00
-  #endif
+	// #if ENABLED(PID_PARAMS_PER_HOTEND)
+	// 	// Specify between 1 and HOTENDS values per array.
+	// 	// If fewer than EXTRUDER values are provided, the last element will be repeated.
+	// 	#define DEFAULT_Kp_LIST {  22.20,  22.20 }
+	// 	#define DEFAULT_Ki_LIST {   1.08,   1.08 }
+	// 	#define DEFAULT_Kd_LIST { 114.00, 114.00 }
+	// #else
+	// 	#define DEFAULT_Kp  22.20
+	// 	#define DEFAULT_Ki   1.08
+	// 	#define DEFAULT_Kd 114.00
+	// #endif
 #endif // PIDTEMP
 
 //===========================================================================
@@ -1071,7 +1071,8 @@
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define MIN_PROBE_EDGE 20
+// #define MIN_PROBE_EDGE 20
+#define PROBING_MARGIN 20
 
 // X and Y axis travel speed (mm/min) between probes
 #define XY_PROBE_FEEDRATE (133*60)

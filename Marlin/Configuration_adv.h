@@ -440,7 +440,7 @@
 #define CHAMBER_AUTO_FAN_PIN -1
 
 #define EXTRUDER_AUTO_FAN_TEMPERATURE 50
-#define EXTRUDER_AUTO_FAN_SPEED 204   // 255 == full speed. Slightly throttled to reduce vibration at the hotend
+#define EXTRUDER_AUTO_FAN_SPEED 128   // 255 == full speed. Throttled to reduce vibration and noise at the hotend
 #define CHAMBER_AUTO_FAN_TEMPERATURE 30
 #define CHAMBER_AUTO_FAN_SPEED 255
 
@@ -608,10 +608,10 @@
 
 //#define SENSORLESS_BACKOFF_MM  { 2, 2 }     // (mm) Backoff from endstops before sensorless homing
 
-#define HOMING_BUMP_MM      { 5, 5, 2 }       // (mm) Backoff from endstops after first bump
+#define HOMING_BUMP_MM      { 0, 0, 2 }       // (mm) Backoff from endstops after first bump
 #define HOMING_BUMP_DIVISOR { 2, 2, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 
-#define HOMING_BACKOFF_POST_MM { 30, 30, 0 }  // (mm) Backoff from endstops after homing
+#define HOMING_BACKOFF_POST_MM { 20, 20, 0 }  // (mm) Backoff from endstops after homing
 
 // #define QUICK_HOME                          // If G28 contains XY do a diagonal move first
 //#define HOME_Y_BEFORE_X                     // If G28 contains XY home Y before X
@@ -1551,7 +1551,7 @@
   // We want linear advance available to use, but "disabled" by default
   #define LIN_ADVANCE_K 0.0    // Unit: mm compression per 1mm/s extruder speed
   //#define LA_DEBUG            // If enabled, this will generate debug information output over USB.
-  //#define EXPERIMENTAL_SCURVE // Enable this option to permit S-Curve Acceleration
+  #define EXPERIMENTAL_SCURVE // Enable this option to permit S-Curve Acceleration
 #endif
 
 // @section leveling
@@ -2172,7 +2172,7 @@
   #endif
 
   #if AXIS_IS_TMC(E0)
-    #define E0_CURRENT    1250
+    #define E0_CURRENT    1100
     #define E0_MICROSTEPS  16
     #define E0_RSENSE    0.11
     #define E0_CHAIN_POS   -1
@@ -2387,20 +2387,20 @@
    * IMPROVE_HOMING_RELIABILITY tunes acceleration and jerk when
    * homing and adds a guard period for endstop triggering.
    */
-  //#define SENSORLESS_HOMING // StallGuard capable drivers only
+  #define SENSORLESS_HOMING // StallGuard capable drivers only
 
   #if EITHER(SENSORLESS_HOMING, SENSORLESS_PROBING)
     // TMC2209: 0...255. TMC2130: -64...63
-    #define X_STALL_SENSITIVITY  8
+    #define X_STALL_SENSITIVITY  70
     #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
-    #define Y_STALL_SENSITIVITY  8
+    #define Y_STALL_SENSITIVITY  82
     #define Y2_STALL_SENSITIVITY Y_STALL_SENSITIVITY
-    #define Z_STALL_SENSITIVITY  8
-    #define Z2_STALL_SENSITIVITY Z_STALL_SENSITIVITY
-    #define Z3_STALL_SENSITIVITY Z_STALL_SENSITIVITY
-    #define Z4_STALL_SENSITIVITY Z_STALL_SENSITIVITY
+    // #define Z_STALL_SENSITIVITY  8
+    // #define Z2_STALL_SENSITIVITY Z_STALL_SENSITIVITY
+    // #define Z3_STALL_SENSITIVITY Z_STALL_SENSITIVITY
+    // #define Z4_STALL_SENSITIVITY Z_STALL_SENSITIVITY
     //#define SPI_ENDSTOPS              // TMC2130 only
-    //#define IMPROVE_HOMING_RELIABILITY
+    #define IMPROVE_HOMING_RELIABILITY
   #endif
 
   /**
@@ -2413,7 +2413,7 @@
    *
    * Values from 0..1023, -1 to disable homing phase for that axis.
    */
-   //#define TMC_HOME_PHASE { 896, 896, 896 }
+   #define TMC_HOME_PHASE { 640, 640, 640 }
 
   /**
    * Beta feature!
